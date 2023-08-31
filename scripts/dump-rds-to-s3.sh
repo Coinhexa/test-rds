@@ -65,6 +65,8 @@ trap 'handle_error $?' ERR
 
 # https://docs.aws.amazon.com/dms/latest/sbs/chap-manageddatabases.postgresql-rds-postgresql-full-load-pd_dump.html
 # https://aws.amazon.com/blogs/database/best-practices-for-migrating-postgresql-databases-to-amazon-rds-and-amazon-aurora/
+# https://stackoverflow.com/a/46577479/5371505
+export AWS_DEFAULT_REGION="us-east-1"
 export PGPASSFILE="$HOME/.pgpass"
 backup_dirname="$(date '+%Y_%m_%d_%HH_%MM_%SS')"
 bucket_url="s3://test-ch-backups-rds"

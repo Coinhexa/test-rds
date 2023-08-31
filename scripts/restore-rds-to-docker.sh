@@ -73,7 +73,8 @@ trap 'handle_error $?' ERR
 
 # trap error
 # trap exit
-
+# https://stackoverflow.com/a/46577479/5371505
+export AWS_DEFAULT_REGION="us-east-1"
 bucket='test-ch-backups-rds'
 container_name="my_postgres_container"
 globals_filename="globals.dump"
