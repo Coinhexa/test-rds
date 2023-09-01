@@ -25,6 +25,20 @@
 
 - Check if our EC2 instance can connect with RDS
 
+## Before running
+
+Log in to postgres instance
+
+    psql "host=test-rdsdb.cvagccap4gx8.us-east-1.rds.amazonaws.com port=26189 dbname=postgres user=postgres sslrootcert=/home/ec2-user/test-rds/certs/rds-ca-rsa2048-g1.pem sslmode=verify-full"
+
+Create the sslinfo extension
+
+    CREATE EXTENSION sslinfo;
+
+Select the extension which should return true
+
+    SELECT ssl_is_used();
+
 ## How to run
 
 ### Localhost

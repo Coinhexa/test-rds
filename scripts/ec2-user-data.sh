@@ -18,13 +18,13 @@ yum update -y
 echo "****************INSTALLING POSTGRES TOOLS****************"
 
 amazon-linux-extras install -y postgresql14
-echo test-rdsdb.cvagccap4gx8.us-east-1.rds.amazonaws.com:26189:postgres:postgres:testRDSinstance > ~/.pgpass
+echo test-rdsdb.cvagccap4gx8.us-east-1.rds.amazonaws.com:26189:postgres:postgres:testRDSinstance > /home/ec2-user/.pgpass
 
 echo "****************CREATING PGPASS FILE****************"
 
 # https://stackoverflow.com/a/50563357/5371505
-chmod 600 ~/.pgpass
-sudo chown ec2-user:ec2-user ~/.pgpass
+chmod 600 /home/ec2-user/.pgpass
+sudo chown ec2-user:ec2-user /home/ec2-user/.pgpass
 
 # Install node.js 16x
 echo "****************INSTALLING NODE.JS****************"
@@ -44,4 +44,5 @@ npm install
 
 echo "****************INSTALLING RDS CERTS****************"
 
+mkdir -p /home/ec2-user/test-rds/certs
 curl "https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem" > /home/ec2-user/test-rds/certs/rds-ca-rsa2048-g1.pem
