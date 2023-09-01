@@ -33,4 +33,8 @@
 
 ### AWS
 
-    POSTGRES_DB=postgres DB_DIALECT=postgres POSTGRES_HOST=localhost POSTGRES_PASSWORD=password POSTGRES_PORT=5432 POSTGRES_SSL=true POSTGRES_USER=postgres node index
+    POSTGRES_DB=postgres DB_DIALECT=postgres POSTGRES_HOST=test-rdsdb.cvagccap4gx8.us-east-1.rds.amazonaws.com POSTGRES_PASSWORD=testRDSinstance POSTGRES_PORT=26189 POSTGRES_SSL=true POSTGRES_USER=postgres node index
+
+### psql
+
+    psql "host=test-rdsdb.cvagccap4gx8.us-east-1.rds.amazonaws.com port=26189 dbname=postgres user=postgres sslrootcert=/home/ec2-user/test-rds/certs/rds-ca-rsa2048-g1.pem sslmode=verify-full"

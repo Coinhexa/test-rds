@@ -9,25 +9,39 @@ IFS=$'\n\t'
 # End of Unofficial Bash Strict Mode
 
 # Update all packages
+echo "****************UPDATING PACKAGES****************"
+
+# Update all packages
 yum update -y
 
+# Install psql and pg_dump
+echo "****************INSTALLING POSTGRES TOOLS****************"
+
+amazon-linux-extras install -y postgresql14
+echo test-rdsdb.cvagccap4gx8.us-east-1.rds.amazonaws.com:26189:postgres:postgres:testRDSinstance > ~/.pgpass
+
+echo "****************CREATING PGPASS FILE****************"
+
+# https://stackoverflow.com/a/50563357/5371505
+chmod 600 ~/.pgpass
+sudo chown ec2-user:ec2-user ~/.pgpass
+
 # Install node.js 16x
-curl -sL https://rpm.nodesource.com/setup_16.x | sudo bash -
+echo "****************INSTALLING NODE.JS****************"
+
+# https://github.com/nodesource/distributions
+yum install https://rpm.nodesource.com/pub_16.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
 yum install -y nodejs git
 
 # Download repo and install dependencies
+echo "****************INSTALLING TEST-RDS GITHUB REPO****************"
+
 cd /home/ec2-user
 git clone https://github.com/Coinhexa/test-rds
 chown -R ec2-user:ec2-user ./test-rds
 cd /home/ec2-user/test-rds
 npm install
 
-# Install psql and pg_dump
-amazon-linux-extras install -y postgresql14
-echo test-chdb.cvagccap4gx8.us-east-1.rds.amazonaws.com:26189:coinhexa_api_db:postgres:password > ~/.pgpass
+echo "****************INSTALLING RDS CERTS****************"
 
-# https://stackoverflow.com/a/50563357/5371505
-chmod 600 ~/.pgpass
-sudo chown ec2-user:ec2-user ~/.pgpass
-export PGPASSFILE='/home/ec2-user/.pgpass'
-psql "host=test-chdb.cvagccap4gx8.us-east-1.rds.amazonaws.com port=26189 dbname=coinhexa_api_db user=postgres sslrootcert=/home/ec2-user/api/docker/production/postgres_server_certs/rds-ca-rsa2048-g1.pem sslmode=verify-full"
+curl "https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem" > /home/ec2-user/test-rds/certs/rds-ca-rsa2048-g1.pem
